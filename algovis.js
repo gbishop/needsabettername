@@ -1,5 +1,5 @@
 import merge from "mergerino";
-import { render, html } from "uhtml";
+import { render, html, Hole } from "uhtml";
 
 const States = [{}];
 
@@ -24,6 +24,13 @@ function showVar([k, v]) {
   </div>`;
 }
 
+/**
+ * Display the code block
+ *
+ * @param {string} code - Code to display
+ * @param {number} highlight - Line number to highlight
+ * @return {Hole}
+ */
 function showCode(code, highlight) {
   code = code.replace(/\$.*/g, "");
   return html`<div class="code">
@@ -38,6 +45,13 @@ ${line}</pre
   </div>`;
 }
 
+/**
+ * Show the states
+ *
+ * @param {number} frame - index of the state to show
+ * @param {string} code - code of the function
+ * @return {void}
+ */
 export function show(frame, code) {
   render(
     document.body,
@@ -50,6 +64,7 @@ export function show(frame, code) {
           min="1"
           max=${States.length - 1}
           oninput=${(e) => show(e.target.value, code)}
+          autofocus
         />
         ${Object.entries(States[frame]).map(showVar)}
       </div>

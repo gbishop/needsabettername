@@ -8,5 +8,7 @@ pre {
 }
 
 pre.highlight {
-  background-color: yellow;
+  border-bottom: 1px solid black;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
 }
