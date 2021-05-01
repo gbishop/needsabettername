@@ -1,0 +1,12 @@
+div.code {
+  display: inline-block;
+  border: 2px solid black;
+  padding: 2px;
+}
+pre {
+  margin: 0;
+}
+
+pre.highlight {
+  background-color: yellow;
+}

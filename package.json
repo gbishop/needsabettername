@@ -1,0 +1,20 @@
+{
+  "name": "algovis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "author": "Gary Bishop",
+  "license": "ISC",
+  "dependencies": {
+    "mergerino": "^0.4.0",
+    "uce": "^1.16.2",
+    "uhtml": "^2.7.3"
+  },
+  "devDependencies": {
+    "snowpack": "^3.3.7"
+  }
+}
