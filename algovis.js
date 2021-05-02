@@ -1,5 +1,11 @@
 import merge from "mergerino";
 import { render, html, Hole } from "uhtml";
+import Prism from "prismjs";
+import "prismjs/themes/prism.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/plugins/line-highlight/prism-line-highlight";
+import "prismjs/plugins/line-highlight/prism-line-highlight.css";
 
 const States = [{}];
 
@@ -45,16 +51,9 @@ function showVar([k, v]) {
  */
 function showCode(code, highlight) {
   code = code.replace(/\$.*/g, "");
-  return html`<div class="code">
-    ${code
-      .split("\n")
-      .map(
-        (line, i) =>
-          html`<pre class=${highlight == i + 1 ? "highlight" : ""}>
-${line}</pre
-          >`
-      )}
-  </div>`;
+  return html`<pre
+    data-line=${highlight}
+  ><code class="language-javascript">${code}</code></pre>`;
 }
 
 /**
@@ -82,4 +81,5 @@ export function show(frame, code) {
       </div>
     </div>`
   );
+  Prism.highlightAll();
 }
