@@ -18,10 +18,22 @@ export function $(patch) {
 }
 
 function showVar([k, v]) {
-  return html`<div>
-    <span class="name">${k}</span>:
-    <span class="value">${JSON.stringify(v)}</span>
-  </div>`;
+  if (v instanceof Array) {
+    let items = v.map(
+      (item, i) =>
+        html`<div class="item"><span class="index">${i}</span>${item}</div>`
+    );
+    return html`<div class="array">
+      <div class="name">${k}</div>
+      <div class="values">${items}</div>
+    </div>`;
+  } else {
+    return html`<div>
+      <div class="name">${k}</div>
+      :
+      <div class="value">${JSON.stringify(v)}</div>
+    </div>`;
+  }
 }
 
 /**
