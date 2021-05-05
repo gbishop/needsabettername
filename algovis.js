@@ -27,7 +27,7 @@ function showVar([k, v]) {
   if (v instanceof Array) {
     let items = v.map(
       (item, i) =>
-        html`<div class="item"><span class="index">${i}</span>${item}</div>`
+        html`<div class="value"><span class="index">${i}</span>${item}</div>`
     );
     return html`<div class="array">
       <div class="name">${k}</div>
@@ -56,6 +56,8 @@ function showCode(code, highlight) {
   ><code class="language-javascript">${code}</code></pre>`;
 }
 
+let observer = null;
+
 /**
  * Show the states
  *
@@ -64,6 +66,10 @@ function showCode(code, highlight) {
  * @return {void}
  */
 export function show(frame, code) {
+  // clear any changed classes from last time
+  for (const e of document.querySelectorAll(".changed")) {
+    e.classList.remove("changed");
+  }
   render(
     document.body,
     html`<div>
@@ -74,12 +80,31 @@ export function show(frame, code) {
           value=${frame}
           min="1"
           max=${States.length - 1}
-          oninput=${(e) => show(e.target.value, code)}
+          oninput=${({ target }) => show(target.value, code)}
           autofocus
         />
-        ${Object.entries(States[frame]).map(showVar)}
+        <div class="variables">
+          ${Object.entries(States[frame]).map(showVar)}
+        </div>
       </div>
     </div>`
   );
   Prism.highlightAll();
+  // setup a MutationObserver to highlight values that changed
+  if (!observer) {
+    observer = new MutationObserver((mutationList) => {
+      // we get a record for each text change
+      for (const mutation of mutationList) {
+        // if the text changed inside one of our value divs
+        if (mutation.target.parentElement.matches("div.value")) {
+          // add the changed class
+          mutation.target.parentElement.classList.add("changed");
+        }
+      }
+    });
+    observer.observe(document.querySelector("div.variables"), {
+      characterData: true,
+      subtree: true,
+    });
+  }
 }

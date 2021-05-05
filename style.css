@@ -23,9 +23,10 @@ span.index {
   vertical-align: top;
 }
 
-div.item {
+div.values div.value {
   border: 1px solid black;
   padding: 2px;
+  display: block;
 }
 
 div.name {
@@ -34,4 +35,8 @@ div.name {
 
 div.value {
   display: inline-block;
+}
+
+div.changed {
+  background-color: yellow;
 }
